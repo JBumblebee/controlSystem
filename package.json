@@ -1,0 +1,16 @@
+{
+  "name": "controlsystem",
+  "version": "1.0.0",
+  "description": "集控运维服务系统后台",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server" :"nodemon server.js"
+  },
+  "author": "bumblebee",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
