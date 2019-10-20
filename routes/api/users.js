@@ -45,7 +45,7 @@ router.post('/register', (req, res) => {
         } else {
             User.findOne({ secret_key: req.body.secret_key }).then(key => {
                 if (!key) {
-                    return res.status(404).json('密钥不正确，请联系管理员！')
+                    return res.status(404).json('通行证不正确，请联系管理员！')
                 } else {
                     const avatar = gravatar.url(req.body.email, {
                         s: '200',
@@ -96,7 +96,7 @@ router.post('/login', (req, res) => {
                 const rule = {
                     id: user.id,
                     name: user.name,
-                    // avatar: user.avatar,
+                    avatar: user.avatar,
                     identity: user.identity,
                     secret_key: user.secret_key
                 }
