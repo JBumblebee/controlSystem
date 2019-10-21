@@ -96,6 +96,7 @@ router.post('/login', (req, res) => {
                 const rule = {
                     id: user.id,
                     name: user.name,
+                    email,
                     avatar: user.avatar,
                     identity: user.identity,
                     secret_key: user.secret_key
@@ -126,6 +127,8 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
     if (req.body.identity) user.identity = req.body.identity
     if (req.body.secret_key) user.secret_key = req.body.secret_key
     if (req.body.password) user.password = req.body.password
+    if (req.body.email) user.email = req.body.email
+
     new User(user).save().then(user => {
         res.json(user)
     })
@@ -137,7 +140,6 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
  * @access Private
  */
 router.post('/delete/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-    // console.log(req.params.id)
     User.findByIdAndDelete({ _id: req.params.id }).then(user => {
         User.save().then(user => res.json(user))
     }).catch((err) => res.json('账号注销成功！'))
@@ -153,17 +155,14 @@ router.post('/edit/:id', passport.authenticate('jwt', { session: false }), (req,
     if (req.body.name) user.name = req.body.name
     if (req.body.password) user.password = req.body.password
     if (req.body.gender) user.gender = req.body.gender
+    if (req.body.identity) user.identity = req.body.identity
+    if (req.body.secret_key) user.secret_key = req.body.secret_key
 
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) throw err
 
             user.password = hash
-
-            // user
-            //     .save()
-            //     .then(user => res.json(user))
-            //     .catch(err => console.log(err))
             User.findOneAndUpdate(
                 { _id: req.params.id },
                 { $set: user },
