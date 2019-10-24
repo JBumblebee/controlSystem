@@ -147,7 +147,7 @@ router.post('/delete/:id', passport.authenticate('jwt', { session: false }), (re
 
 /**
  * @router POST api/users/edit/:id
- * @desc 更新用户信息请求的json数据
+ * @desc 用户更新用户信息请求的json数据
  * @access Private
  */
 router.post('/edit/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -161,7 +161,6 @@ router.post('/edit/:id', passport.authenticate('jwt', { session: false }), (req,
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) throw err
-
             user.password = hash
             User.findOneAndUpdate(
                 { _id: req.params.id },
@@ -170,8 +169,26 @@ router.post('/edit/:id', passport.authenticate('jwt', { session: false }), (req,
             ).then(user => res.json(user))
         })
     })
-
-    
 })
 
+
+/**
+ * @router POST api/users/edit1/:id
+ * @desc 管理员更新用户信息请求的json数据
+ * @access Private
+ */
+router.post('/edit1/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const user = {}
+    if (req.body.name) user.name = req.body.name
+    if (req.body.password) user.password = req.body.password
+    if (req.body.gender) user.gender = req.body.gender
+    if (req.body.identity) user.identity = req.body.identity
+    if (req.body.secret_key) user.secret_key = req.body.secret_key
+
+    User.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: user },
+        { new: true }
+    ).then(user => res.json(user))
+})
 module.exports = router
