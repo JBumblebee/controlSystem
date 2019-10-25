@@ -21,7 +21,7 @@ mongoose.connect(db.mongodbURL, { useNewUrlParser: true, useUnifiedTopology: tru
     .catch(error => console.log(error))
 
 //使用body-parser中间件，获取post请求数据
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 
 // app.get('/', (req, res) => {
