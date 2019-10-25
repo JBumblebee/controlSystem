@@ -36,7 +36,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
  * @access public
  */
 router.post('/register', (req, res) => {
-    // console.log(req.body)
     User.findOne(
         { email: req.body.email }
     ).then(user => {
@@ -47,29 +46,30 @@ router.post('/register', (req, res) => {
                 if (!key) {
                     return res.status(404).json('通行证不正确，请联系管理员！')
                 } else {
-                    const avatar = gravatar.url(req.body.email, {
+                    const user = {}
+                    if (req.body.name) user.name = req.body.name
+                    if (req.body.email) user.email = req.body.email
+                    if (req.body.password) user.password = req.body.password
+                    if (req.body.gender) user.gender = req.body.gender
+                    if (req.body.identity) user.identity = req.body.identity
+                    if (req.body.secret_key) user.secret_key = req.body.secret_key
+                    user.avatar = gravatar.url(req.body.email, {
                         s: '200',
                         r: 'pg',
                         d: 'mm'
                     })
-                    const newUser = new User({
-                        name: req.body.name,
-                        email: req.body.email,
-                        avatar,
-                        password: req.body.password,
-                        secret_key: req.body.secret_key,
-                        identity: req.body.identity,
-                    })
+
                     bcrypt.genSalt(10, function (err, salt) {
-                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        bcrypt.hash(user.password, salt, (err, hash) => {
                             if (err) throw err
+                            user.password = hash
 
-                            newUser.password = hash
-
-                            newUser
-                                .save()
-                                .then(user => res.json(user))
-                                .catch(err => console.log(err))
+                            User.findOneAndUpdate(
+                                { secret_key: req.body.secret_key },
+                                { $set: user },
+                                { new: true }
+                            ).then(user => res.json(user))
+                                .catch(err => res.status(404).json(err))
                         })
                     })
                 }

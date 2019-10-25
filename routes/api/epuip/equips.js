@@ -43,6 +43,18 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
 })
 
 /**
+ * @router POST api/equips/addMany
+ * @desc   添加模板导入的设备信息
+ * @access private
+ */
+router.post('/addMany', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Equip.insertMany(req.body).then(result => {
+        res.json(result)
+    })
+})
+
+
+/**
  * @router POST api/equips/delete/:id
  * @desc   删除设备信息
  * @access private
@@ -54,6 +66,17 @@ router.post('/delete/:id', passport.authenticate('jwt', { session: false }), (re
         )
     }).catch(err => {
         res.status(404).json('删除成功')
+    })
+})
+
+/**
+ * @router POST api/equips/deleteMany
+ * @desc   批量删除设备信息
+ * @access private
+ */
+router.post('/deleteMany', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Equip.deleteMany({ _id: { $in: req.body } }).then((result) => {
+        res.json('批量删除成功')
     })
 })
 

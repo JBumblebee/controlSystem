@@ -10,6 +10,8 @@ const users = require('./routes/api/users.js')
 const equips = require('./routes/api/epuip/equips')
 const buildings = require('./routes/api/place/buildings')
 const factorys = require('./routes/api/place/others')
+// const excel = require('./routes/api/downExcel')//已经弃用
+
 
 //数据库连接
 const db = require('./config/keys') //基础配置
@@ -36,7 +38,8 @@ app.use('/api/users', users)
 app.use('/api/equips', equips)
 app.use('/api/place', buildings)
 app.use('/api/others', factorys)
+// app.use('/api/excel', excel) //已经弃用
 
-app.listen(5000, () => {
-    console.log('server is running on 5000...')
+app.listen(5001, () => {
+    console.log('server is running on 5001...')
 })
