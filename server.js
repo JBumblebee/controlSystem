@@ -10,6 +10,7 @@ const users = require('./routes/api/users.js')
 const equips = require('./routes/api/epuip/equips')
 const buildings = require('./routes/api/place/buildings')
 const factorys = require('./routes/api/place/others')
+const scenes = require('./routes/api/scene/scenes')
 // const excel = require('./routes/api/downExcel')//已经弃用
 
 
@@ -21,7 +22,7 @@ mongoose.connect(db.mongodbURL, { useNewUrlParser: true, useUnifiedTopology: tru
     .catch(error => console.log(error))
 
 //使用body-parser中间件，获取post请求数据
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // app.get('/', (req, res) => {
@@ -38,6 +39,7 @@ app.use('/api/users', users)
 app.use('/api/equips', equips)
 app.use('/api/place', buildings)
 app.use('/api/others', factorys)
+app.use('/api/scenes', scenes)
 // app.use('/api/excel', excel) //已经弃用
 
 app.listen(5001, () => {
