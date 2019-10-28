@@ -59,13 +59,13 @@ router.post('/edit/:id', (req, res) => {
     if (req.body.secret_key) demo.secret_key = req.body.secret_key
     if (req.body.sceneName) demo.sceneName = req.body.sceneName
     if (req.body.desc) demo.desc = req.body.desc
-    if (req.body.air) demo.air = eval(req.body.air)
-    if (req.body.lamp) demo.lamp = eval(req.body.lamp)
-    if (req.body.curtain) demo.curtain = eval(req.body.curtain)
-    if (req.body.computer) demo.computer = eval(req.body.computer)
-    if (req.body.projector) demo.projector = eval(req.body.projector)
-    if (req.body.fan) demo.fan = eval(req.body.fan)
     if (req.body.num) demo.num = parseInt(req.body.num)
+    demo.air = eval(req.body.air)
+    demo.lamp = eval(req.body.lamp)
+    demo.curtain = eval(req.body.curtain)
+    demo.computer = eval(req.body.computer)
+    demo.projector = eval(req.body.projector)
+    demo.fan = eval(req.body.fan)
 
     Scene.findByIdAndUpdate(
         { _id: req.params.id },
@@ -114,7 +114,7 @@ router.post('/search', (req, res) => {
 router.post('/send/:id', (req, res) => {
     SceneControl.findByIdAndUpdate(
         { _id: req.params.id },
-        { $set: req.body},
+        { $set: req.body },
         { new: true }
     ).then(msg => res.json(msg)).catch(err => res.status(404).json(err))
 })
