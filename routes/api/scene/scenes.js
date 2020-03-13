@@ -30,7 +30,7 @@ router.post('/add', (req, res) => {
     if (req.body.computer) demo.computer = eval(req.body.computer)
     if (req.body.projector) demo.projector = eval(req.body.projector)
     if (req.body.fan) demo.fan = eval(req.body.fan)
-    if (req.body.num) demo.num = parseInt(req.body.num)
+    if (req.body.temperature) demo.temperature = parseInt(req.body.temperature)
 
     new Scene(demo).save().then(demo => {
         res.json(demo)
@@ -50,8 +50,8 @@ router.get('/getScenes/:secret_key', (req, res) => {
 
 
 /**
- * @router POST api/scenes/add
- * @desc  增加场景
+ * @router POST api/scenes/edit/:id
+ * @desc  编辑场景
  * @access public
  */
 router.post('/edit/:id', (req, res) => {
@@ -59,7 +59,7 @@ router.post('/edit/:id', (req, res) => {
     if (req.body.secret_key) demo.secret_key = req.body.secret_key
     if (req.body.sceneName) demo.sceneName = req.body.sceneName
     if (req.body.desc) demo.desc = req.body.desc
-    if (req.body.num) demo.num = parseInt(req.body.num)
+    if (req.body.temperature) demo.temperature = parseInt(req.body.temperature)
     demo.air = eval(req.body.air)
     demo.lamp = eval(req.body.lamp)
     demo.curtain = eval(req.body.curtain)

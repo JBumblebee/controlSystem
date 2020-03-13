@@ -31,12 +31,6 @@ const UserSchema = new Schema({
         required: true,
         default: 'teacher'
     },
-    // status: {
-    //     type: Number,
-    //     enum: [-1, 0, 1],
-    //     default: 0
-
-    // },
     date: {
         type: Date,
         default: Date.now

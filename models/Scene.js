@@ -12,7 +12,7 @@ const sceneSchema = new Schema({
     computer: Boolean,
     projector: Boolean,
     fan: Boolean,
-    num: Number
+    temperature: Number
 })
 
 module.exports = mongoose.model('scenes', sceneSchema)

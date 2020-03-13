@@ -62,10 +62,9 @@ router.post('/addMany', passport.authenticate('jwt', { session: false }), (req, 
 router.post('/delete/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     // console.log(req.params.id)
     Equip.findOneAndRemove({ _id: req.params.id }).then(equip => {
-        Equip.save().then(equip => res.json(equip)
-        )
+        res.json('删除成功')
     }).catch(err => {
-        res.status(404).json('删除成功')
+        res.status(404).json(err)
     })
 })
 

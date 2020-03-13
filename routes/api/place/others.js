@@ -54,11 +54,11 @@ router.get('/getStatus', (req, res) => {
  * @access public
  */
 router.get('/getWarningSetings/:secret_key', (req, res) => {
-    Warning.find({ secret_key: req.params.secret_key }).then(types => {
-        if (!types) {
+    Warning.find({ secret_key: req.params.secret_key }).then(setting => {
+        if (!setting) {
             res.status(404).json('没有任何数据')
         }
-        res.json(types)
+        res.json(setting)
     }).catch(err => res.status(404).json(err))
 })
 
