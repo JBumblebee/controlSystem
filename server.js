@@ -14,7 +14,7 @@ const buildings = require('./routes/api/place/buildings')
 const factorys = require('./routes/api/place/others')
 const scenes = require('./routes/api/scene/scenes')
 const controls = require('./routes/api/epuipControl/controls')
-
+const analysis = require('./routes/api/dataAnalysis/analysis')
 
 //数据库连接
 const db = require('./config/keys') //基础配置
@@ -49,6 +49,7 @@ app.use('/api/place', buildings)
 app.use('/api/others', factorys)
 app.use('/api/scenes', scenes)
 app.use('/api/controls',controls)
+app.use('/api/analysis',analysis)
 
 app.listen(5001, () => {
     console.log('server is running on 5001...')
